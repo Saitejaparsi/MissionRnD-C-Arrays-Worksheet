@@ -20,7 +20,7 @@ int * sortedArrayInsertNumber(int *Arr, int len, int num)
 		return NULL;
 	else
 	{
-		Arr = (int *)realloc(Arr, len + 1);
+		Arr = (int *)realloc(Arr,(len + 1)*sizeof(int));
 		int i, j;
 		len = len + 1;
 		if (num <=Arr[0])
@@ -38,10 +38,6 @@ int * sortedArrayInsertNumber(int *Arr, int len, int num)
 		}
 		else
 		{  
-			int a[6];
-			for (i = 0; i < 6; i++)
-				a[i] = *(Arr + i);
-
 			for (i = 1; i < len - 1; i++)
 				if (num>=Arr[i - 1] && num < Arr[i])
 					break;
