@@ -20,7 +20,29 @@ struct student {
 	char *name;
 	int score;
 };
-
 struct student ** topKStudents(struct student *students, int len, int K) {
-	return NULL;
+	if (K<1||len<K)
+	    return NULL;
+	else{
+		struct student *r;
+		int i,temp;
+		char *temp1;
+		for (i = 0; i < len - 1; i++){
+			if (((students + i)->score) < ((students + i + 1)->score))
+			{
+				temp = (students + i)->score;
+				(students + i)->score = (students + i + 1)->score;
+				(students + i + 1)->score = temp;
+				temp1=(students + i)->name;
+				(students + i)->name = (students + i + 1)->name;
+				(students + i + 1)->name = temp1;
+			}
+		}
+		for (i = 0; i < K; i++)
+		{
+			
+			*(r + i) = *(students + i);
+		}
+		return &r;
+	}
 }
