@@ -12,37 +12,46 @@ ERROR CASES: Return NULL for invalid inputs.
 
 NOTES:
 */
-
 #include <iostream>
 #include <malloc.h>
-
+void numswap(int *n1, int *n2);
+void charswap(char *s1,char *s2);
 struct student {
 	char *name;
 	int score;
 };
 struct student ** topKStudents(struct student *students, int len, int K) {
-	if (K<1||len<K)
+	if (K<1||students==NULL||len<=0)
 	    return NULL;
-	else{
-		struct student *r;
-		int i,temp;
-		char *temp1;
-		for (i = 0; i < len - 1; i++){
-			if (((students + i)->score) < ((students + i + 1)->score))
-			{
-				temp = (students + i)->score;
-				(students + i)->score = (students + i + 1)->score;
-				(students + i + 1)->score = temp;
-				temp1=(students + i)->name;
-				(students + i)->name = (students + i + 1)->name;
-				(students + i + 1)->name = temp1;
+	if (len < K)
+		K = len;
+	struct student **r = (struct student **)malloc(sizeof(struct student)*K);
+	int i,j;
+	for (i = 0; i < K; i++)
+		r[i] = (struct student *)malloc(sizeof(struct student));
+		for (i = 0; i < len - 1; i++)
+		{
+			for (j = 0; j < len - i - 1; j++){
+				if (((students + j)->score) < ((students + j + 1)->score))
+				{
+					numswap(&((students + j)->score), &((students + j + 1)->score));
+					charswap(((students + i)->name), ((students + i + 1)->name));
+				}
 			}
 		}
-		for (i = 0; i < K; i++)
-		{
-			
-			*(r + i) = *(students + i);
+		for (i = 0; i < K; i++){
+			r[i]->score = (students + i)->score;
+			r[i]->name = (students + i)->name;
 		}
-		return &r;
-	}
+		return r;
+}
+void numswap(int *n1, int *n2){
+	int temp = *n1;
+	*n1 = *n2;
+	*n2 = temp;
+}
+void charswap(char *s1, char *s2){
+	char *temp = s1;
+	s1 = s2;
+	s2 = temp;
 }
